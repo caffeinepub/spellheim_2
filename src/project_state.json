@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Create Spellheim, a first-person 2.5D fantasy game set in the world of Niron, featuring deep customization, spellcasting, combat, biomes, creatures, NPCs, and music.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Fantasy wordmark logo reading “Spellheim”, medieval engraved style, dark ink on parchment background (spellheim-logo.dim_1024x256.png)\n- Seamless parchment/aged leather UI panel texture, subtle ornamental corners (hud-panel-texture.dim_1024x1024.png)\n- Set of 3 fantasy spell icons (projectile, area burst, shield) in a consistent ink/etched style on transparent background (spell-icons-set.dim_512x512.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-the-core-app-shell-for-spellheim-with-a-landing-screen-and-an-in-app-navigation-flow-into-the-playable-game-scene",
+      "title": "Create the core app shell for Spellheim with a landing screen and an in-app navigation flow into the playable game scene.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-playable-first-person-2-5d-game-scene-using-three-js-via-react-three-fiber-including-player-camera-controls-a-ground-plane-collision-boundaries-and-a-basic-movement-loop-wasd-mouse-look",
+      "title": "Implement a playable first-person 2.5D game scene using Three.js via React Three Fiber, including player camera controls, a ground plane, collision boundaries, and a basic movement loop (WASD + mouse look).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-initial-character-customization-ui-that-lets-the-player-configure-a-character-profile-at-minimum-name-archetype-class-and-2-3-cosmetic-selections-and-apply-it-to-the-in-game-hud-profile-state",
+      "title": "Add an initial character customization UI that lets the player configure a character profile (at minimum: name, archetype/class, and 2–3 cosmetic selections) and apply it to the in-game HUD/profile state.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-basic-spellcasting-system-with-at-least-three-spells-e-g-projectile-area-effect-defensive-shield-including-casting-input-cooldowns-mana-energy-resource-and-simple-visual-effects",
+      "title": "Implement a basic spellcasting system with at least three spells (e.g., projectile, area effect, defensive shield) including casting input, cooldowns, mana/energy resource, and simple visual effects.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-minimal-combat-loop-spawn-at-least-one-hostile-creature-type-with-health-damage-simple-ai-approach-attack-and-death-respawn-enable-the-player-to-defeat-it-using-spells",
+      "title": "Implement a minimal combat loop: spawn at least one hostile creature type with health, damage, simple AI (approach/attack), and death/respawn; enable the player to defeat it using spells.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-biome-support-for-the-world-of-niron-implement-at-least-three-biomes-visual-palette-props-terrain-variation-and-a-way-to-switch-biomes-menu-or-portal-while-keeping-core-gameplay-intact",
+      "title": "Add biome support for the world of Niron: implement at least three biomes (visual palette + props/terrain variation) and a way to switch biomes (menu or portal) while keeping core gameplay intact.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-npc-support-implement-at-least-one-non-hostile-npc-with-an-interaction-prompt-and-a-simple-dialogue-ui-multi-line-next-close-that-can-be-triggered-in-game",
+      "title": "Add NPC support: implement at least one non-hostile NPC with an interaction prompt and a simple dialogue UI (multi-line, next/close) that can be triggered in-game.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-music-support-include-background-music-playback-with-controls-play-pause-volume-and-ensure-it-continues-appropriately-across-biome-changes-and-scene-transitions",
+      "title": "Add music support: include background music playback with controls (play/pause, volume) and ensure it continues appropriately across biome changes and scene transitions.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-establish-a-coherent-visual-theme-for-spellheim-colors-typography-panels-buttons-hud-styling-that-fits-a-fantasy-game-set-in-niron-and-apply-it-consistently-across-landing-customization-hud-dialogue-and-settings-ui-avoid-blue-purple-as-the-primary-palette",
+      "title": "Establish a coherent visual theme for Spellheim (colors, typography, panels, buttons, HUD styling) that fits a fantasy game set in Niron, and apply it consistently across landing, customization, HUD, dialogue, and settings UI (avoid blue/purple as the primary palette).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-image-assets-and-use-them-in-the-ui-a-spellheim-logo-a-parchment-style-hud-panel-texture-and-a-set-of-spell-icons-store-generated-images-under-frontend-public-assets-generated-and-reference-them-directly-from-the-frontend",
+      "title": "Add generated static image assets and use them in the UI: a Spellheim logo, a parchment-style HUD panel texture, and a set of spell icons. Store generated images under frontend/public/assets/generated and reference them directly from the frontend.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-9",
+      "summary": "Implement backend persistence in the single Motoko actor for player save data (character profile, basic stats/progression, settings like audio volume) keyed to the authenticated Internet Identity principal when available.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "3d",
+  "projectName": "Spellheim",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

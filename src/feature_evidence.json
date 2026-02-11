@@ -1,0 +1,235 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-the-core-app-shell-for-spellheim-with-a-landing-screen-and-an-in-app-navigation-flow-into-the-playable-game-scene",
+      "featureTitle": "Create the core app shell for Spellheim with a landing screen and an in-app navigation flow into the playable game scene.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/main.tsx",
+        "frontend/src/screens/CharacterCustomizationScreen.tsx",
+        "frontend/src/screens/GameScreen.tsx",
+        "frontend/src/screens/LandingScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-playable-first-person-2-5d-game-scene-using-three-js-via-react-three-fiber-including-player-camera-controls-a-ground-plane-collision-boundaries-and-a-basic-movement-loop-wasd-mouse-look",
+      "featureTitle": "Implement a playable first-person 2.5D game scene using Three.js via React Three Fiber, including player camera controls, a ground plane, collision boundaries, and a basic movement loop (WASD + mouse look).",
+      "files": [
+        "frontend/src/game/SpellheimCanvas.tsx",
+        "frontend/src/game/controls/useFirstPersonControls.ts",
+        "frontend/src/game/physics/collision.ts",
+        "frontend/src/screens/GameScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-initial-character-customization-ui-that-lets-the-player-configure-a-character-profile-at-minimum-name-archetype-class-and-2-3-cosmetic-selections-and-apply-it-to-the-in-game-hud-profile-state",
+      "featureTitle": "Add an initial character customization UI that lets the player configure a character profile (at minimum: name, archetype/class, and 2–3 cosmetic selections) and apply it to the in-game HUD/profile state.",
+      "files": [
+        "frontend/src/screens/CharacterCustomizationScreen.tsx",
+        "frontend/src/screens/GameScreen.tsx",
+        "frontend/src/state/characterProfile.ts",
+        "frontend/src/state/useCharacterProfile.ts",
+        "frontend/src/ui/Auth/LoginButton.tsx",
+        "frontend/src/ui/HUD/HUDOverlay.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-basic-spellcasting-system-with-at-least-three-spells-e-g-projectile-area-effect-defensive-shield-including-casting-input-cooldowns-mana-energy-resource-and-simple-visual-effects",
+      "featureTitle": "Implement a basic spellcasting system with at least three spells (e.g., projectile, area effect, defensive shield) including casting input, cooldowns, mana/energy resource, and simple visual effects.",
+      "files": [
+        "frontend/src/game/SpellheimCanvas.tsx",
+        "frontend/src/game/spells/SpellEffects.tsx",
+        "frontend/src/game/spells/spellTypes.ts",
+        "frontend/src/game/spells/useSpellSystem.ts",
+        "frontend/src/ui/HUD/HUDOverlay.tsx",
+        "frontend/src/ui/HUD/SpellBar.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-minimal-combat-loop-spawn-at-least-one-hostile-creature-type-with-health-damage-simple-ai-approach-attack-and-death-respawn-enable-the-player-to-defeat-it-using-spells",
+      "featureTitle": "Implement a minimal combat loop: spawn at least one hostile creature type with health, damage, simple AI (approach/attack), and death/respawn; enable the player to defeat it using spells.",
+      "files": [
+        "frontend/src/game/SpellheimCanvas.tsx",
+        "frontend/src/game/combat/combatTypes.ts",
+        "frontend/src/game/entities/HostileCreature.tsx",
+        "frontend/src/game/entities/useCreatureAI.ts",
+        "frontend/src/ui/HUD/HUDOverlay.tsx",
+        "frontend/src/ui/HUD/StatusBars.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-biome-support-for-the-world-of-niron-implement-at-least-three-biomes-visual-palette-props-terrain-variation-and-a-way-to-switch-biomes-menu-or-portal-while-keeping-core-gameplay-intact",
+      "featureTitle": "Add biome support for the world of Niron: implement at least three biomes (visual palette + props/terrain variation) and a way to switch biomes (menu or portal) while keeping core gameplay intact.",
+      "files": [
+        "frontend/src/game/SpellheimCanvas.tsx",
+        "frontend/src/game/biomes/BiomeEnvironment.tsx",
+        "frontend/src/game/biomes/biomes.ts",
+        "frontend/src/ui/HUD/BiomeSwitcher.tsx",
+        "frontend/src/ui/HUD/HUDOverlay.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-npc-support-implement-at-least-one-non-hostile-npc-with-an-interaction-prompt-and-a-simple-dialogue-ui-multi-line-next-close-that-can-be-triggered-in-game",
+      "featureTitle": "Add NPC support: implement at least one non-hostile NPC with an interaction prompt and a simple dialogue UI (multi-line, next/close) that can be triggered in-game.",
+      "files": [
+        "frontend/src/game/SpellheimCanvas.tsx",
+        "frontend/src/game/entities/NPC.tsx",
+        "frontend/src/ui/HUD/HUDOverlay.tsx",
+        "frontend/src/ui/HUD/InteractionPrompt.tsx",
+        "frontend/src/ui/dialogue/DialoguePanel.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-music-support-include-background-music-playback-with-controls-play-pause-volume-and-ensure-it-continues-appropriately-across-biome-changes-and-scene-transitions",
+      "featureTitle": "Add music support: include background music playback with controls (play/pause, volume) and ensure it continues appropriately across biome changes and scene transitions.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/audio/AudioProvider.tsx",
+        "frontend/src/ui/HUD/AudioControls.tsx",
+        "frontend/src/ui/HUD/HUDOverlay.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-establish-a-coherent-visual-theme-for-spellheim-colors-typography-panels-buttons-hud-styling-that-fits-a-fantasy-game-set-in-niron-and-apply-it-consistently-across-landing-customization-hud-dialogue-and-settings-ui-avoid-blue-purple-as-the-primary-palette",
+      "featureTitle": "Establish a coherent visual theme for Spellheim (colors, typography, panels, buttons, HUD styling) that fits a fantasy game set in Niron, and apply it consistently across landing, customization, HUD, dialogue, and settings UI (avoid blue/purple as the primary palette).",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/src/screens/CharacterCustomizationScreen.tsx",
+        "frontend/src/screens/LandingScreen.tsx",
+        "frontend/src/ui/HUD/HUDOverlay.tsx",
+        "frontend/src/ui/dialogue/DialoguePanel.tsx",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-generated-static-image-assets-and-use-them-in-the-ui-a-spellheim-logo-a-parchment-style-hud-panel-texture-and-a-set-of-spell-icons-store-generated-images-under-frontend-public-assets-generated-and-reference-them-directly-from-the-frontend",
+      "featureTitle": "Add generated static image assets and use them in the UI: a Spellheim logo, a parchment-style HUD panel texture, and a set of spell icons. Store generated images under frontend/public/assets/generated and reference them directly from the frontend.",
+      "files": [
+        "frontend/src/screens/LandingScreen.tsx",
+        "frontend/src/ui/HUD/HUDOverlay.tsx",
+        "frontend/src/ui/HUD/SpellBar.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

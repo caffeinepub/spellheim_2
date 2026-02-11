@@ -1,0 +1,106 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-08T14:29:00.923Z",
+  "summary": "Diff adds a new Motoko backend actor with character profile persistence behind an access-control layer, and introduces a React app shell with screen routing plus substantial Three.js/R3F gameplay scaffolding (biomes, first-person controls, spells, a hostile creature, an NPC, and an audio provider). However, several BuildRequest constraints/ACs are either not evidenced in the diff or appear violated (notably non-blue/purple UI palette and unauthenticated/local-save behavior), and some implemented items (custom authorization/admin-token flow) were not requested.",
+  "missing_requirements": [
+    {
+      "id": "REQ-9",
+      "requirement": "When not signed in, the app still works (e.g., uses local-only save) and does not throw backend errors; backend methods should allow get/update of the current user’s save data keyed by principal when available.",
+      "reason": "The backend methods shown require `#user` permission and trap on unauthorized callers; there is no evidenced local-only persistence path for character profile/basic stats/settings when unauthenticated.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "Primary UI palette is not blue/purple-dominant and theme is applied consistently across core screens.",
+      "reason": "In-scene NPC materials use strong blue/purple colors (e.g., `#2563eb`, `#7c3aed`, `#3b82f6`), which contradicts the \"avoid blue/purple as the primary palette\" constraint at least for in-game visuals.",
+      "evidence": [
+        "frontend/src/game/entities/NPC.tsx"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "requirement": "Use generated static image assets (logo, HUD panel texture, spell icons) stored under `frontend/public/assets/generated`, and reference them directly from the frontend (landing uses logo; HUD uses panel texture; spells use icon set).",
+      "reason": "No evidence in the shown diff of the required generated images being added under `frontend/public/assets/generated`, nor of UI referencing them (no `/assets/generated/...` references in the provided files). Omitted files may contain assets, but this is not evidenced in the provided diff summary.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/game/spells/spellTypes.ts",
+        "frontend/src/game/SpellheimCanvas.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Custom authorization/access-control system with admin initialization via a secret URL parameter (`caffeineAdminToken`) and permission-gated profile methods.",
+      "reason": "BuildRequest requires a single Motoko actor and II-keyed persistence, but does not request adding a bespoke admin-token initialization flow or trapping unauthorized access via an access-control mixin.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Use of Zustand for biome/interaction state management.",
+      "reason": "Not requested explicitly; the BuildRequest specifies functional requirements but does not request introducing Zustand as an additional state management library.",
+      "evidence": [
+        "frontend/src/game/biomes/useBiomeStore.ts",
+        "frontend/src/game/interactions/useInteractionStore.ts"
+      ]
+    },
+    {
+      "description": "Integration of `@react-three/cannon` Physics wrapper.",
+      "reason": "Not requested explicitly (REQ-2 asks for collision boundaries, but not a physics engine dependency). The diff introduces a Physics provider without showing actual physics bodies usage.",
+      "evidence": [
+        "frontend/src/game/SpellheimCanvas.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.66,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/audio/AudioProvider.tsx",
+    "frontend/src/game/SpellheimCanvas.tsx",
+    "frontend/src/game/biomes/BiomeEnvironment.tsx",
+    "frontend/src/game/biomes/biomes.ts",
+    "frontend/src/game/biomes/useBiomeStore.ts",
+    "frontend/src/game/combat/combatTypes.ts",
+    "frontend/src/game/combat/useCombatState.ts",
+    "frontend/src/game/controls/useFirstPersonControls.ts",
+    "frontend/src/game/entities/HostileCreature.tsx",
+    "frontend/src/game/entities/NPC.tsx",
+    "frontend/src/game/entities/useCreatureAI.ts",
+    "frontend/src/game/interactions/useInteractionStore.ts",
+    "frontend/src/game/physics/collision.ts",
+    "frontend/src/game/spells/SpellEffects.tsx",
+    "frontend/src/game/spells/spellTypes.ts",
+    "frontend/src/game/spells/useSpellSystem.ts",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/screens/CharacterCustomizationScreen.tsx",
+    "frontend/src/screens/GameScreen.tsx",
+    "frontend/src/screens/LandingScreen.tsx",
+    "frontend/src/state/characterProfile.ts",
+    "frontend/src/state/useCharacterProfile.ts",
+    "frontend/src/ui/Auth/LoginButton.tsx",
+    "frontend/src/ui/HUD/AudioControls.tsx",
+    "frontend/src/ui/HUD/BiomeSwitcher.tsx",
+    "frontend/src/ui/HUD/HUDOverlay.tsx",
+    "frontend/src/ui/HUD/InteractionPrompt.tsx",
+    "frontend/src/ui/HUD/SpellBar.tsx",
+    "frontend/src/ui/HUD/StatusBars.tsx",
+    "frontend/src/ui/dialogue/DialoguePanel.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

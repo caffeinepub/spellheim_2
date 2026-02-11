@@ -1,0 +1,402 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Spellheim (Niron) — Frontend MVP 2.5D game scaffold",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create the core app shell with a landing screen and in-app navigation into the playable game scene.",
+      "acceptanceCriteria": [
+        "App loads to a Spellheim landing screen with a clear primary action to start the game",
+        "Starting the game transitions into a game scene view without full page reloads",
+        "User-facing text is in English"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the main app shell that manages navigation between (1) Landing, (2) Character Customization, and (3) Game Scene using in-app state (no full reload). Ensure all user-facing text is English."
+        },
+        {
+          "path": "frontend/src/screens/LandingScreen.tsx",
+          "operation": "create",
+          "description": "Implement the Spellheim landing screen with a primary Start Game action and space for logo + brief instructions; wire Start Game to the app navigation flow."
+        },
+        {
+          "path": "frontend/src/screens/CharacterCustomizationScreen.tsx",
+          "operation": "create",
+          "description": "Create a dedicated customization screen that can be reached before entering the game (as part of the Start Game flow) and can later be reachable from an in-game menu."
+        },
+        {
+          "path": "frontend/src/screens/GameScreen.tsx",
+          "operation": "create",
+          "description": "Create the game scene container view responsible for mounting/unmounting the React Three Fiber scene, HUD, and settings overlays without crashes when entering/exiting."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Ensure the root rendering remains stable and imports resolve to the created App and global stylesheet; keep transitions between screens client-side."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement a playable first-person 2.5D game scene with camera controls, movement loop, ground plane, and collision bounds using React Three Fiber (Three.js).",
+      "acceptanceCriteria": [
+        "Player can move with WASD and look around with mouse",
+        "Player cannot move through world bounds/solid collision volume(s)",
+        "The game loop renders smoothly and does not crash when entering/exiting the scene"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/SpellheimCanvas.tsx",
+          "operation": "create",
+          "description": "Implement the React Three Fiber scene root (first-person 2D game) with a ground plane, lighting, and stable mount/unmount behavior; expose hooks/props for biome selection and gameplay systems."
+        },
+        {
+          "path": "frontend/src/game/controls/useFirstPersonControls.ts",
+          "operation": "create",
+          "description": "Add WASD movement + mouse-look control logic (pointer-lock style) with proper event listener cleanup and a simple movement loop compatible with React Three Fiber's frame updates."
+        },
+        {
+          "path": "frontend/src/game/physics/collision.ts",
+          "operation": "create",
+          "description": "Implement lightweight collision/bounds utilities (e.g., world AABB clamp + simple solid volumes) used by player movement and entities to prevent moving through boundaries."
+        },
+        {
+          "path": "frontend/src/screens/GameScreen.tsx",
+          "operation": "modify",
+          "description": "Wire SpellheimCanvas into the GameScreen, ensure pointer lock/controls enablement and teardown are handled safely when leaving the scene."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add character customization UI (name, class, cosmetics) and apply it to HUD/profile state with persistence (local and/or signed-in).",
+      "acceptanceCriteria": [
+        "A customization screen exists before entering the game (or accessible from a menu)",
+        "Chosen options are shown in a simple HUD/profile panel in-game",
+        "Character profile persists across refresh for the signed-in user (or locally if not signed in)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/state/characterProfile.ts",
+          "operation": "create",
+          "description": "Define frontend CharacterProfile types, defaults, and validation helpers used by customization UI and in-game HUD."
+        },
+        {
+          "path": "frontend/src/state/useCharacterProfile.ts",
+          "operation": "create",
+          "description": "Create a React hook for reading/updating the current character profile, persisting locally, and optionally syncing when authenticated via the selected 'authorization' component patterns. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/screens/CharacterCustomizationScreen.tsx",
+          "operation": "modify",
+          "description": "Implement the customization form (name, archetype/class, and 2–3 cosmetics) that updates the shared profile state and supports continuing into the game."
+        },
+        {
+          "path": "frontend/src/ui/HUD/HUDOverlay.tsx",
+          "operation": "create",
+          "description": "Create an in-game HUD overlay that displays the selected character profile (name, archetype, cosmetics summary) and integrates with health/mana/spells later."
+        },
+        {
+          "path": "frontend/src/screens/GameScreen.tsx",
+          "operation": "modify",
+          "description": "Mount HUDOverlay in-game and bind it to the shared character profile state; add a way to open customization from an in-game menu without leaving the app."
+        },
+        {
+          "path": "frontend/src/ui/Auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Add an optional Internet Identity login/logout control using the selected 'authorization' component guidance so signed-in users can benefit from backend-keyed saves while keeping local play available. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement a basic spellcasting system (3 spells) with inputs, cooldowns, mana, and visible VFX that affect at least one target type.",
+      "acceptanceCriteria": [
+        "Player can cast at least 3 distinct spells with clearly documented keybinds displayed in the UI",
+        "Spells consume mana/energy and respect cooldowns",
+        "Spell effects are visible in the scene and interact with at least one target type (dummy or creature)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/spells/spellTypes.ts",
+          "operation": "create",
+          "description": "Define spell identifiers and shared spell metadata (name, keybind, mana cost, cooldown) for projectile, area effect, and shield."
+        },
+        {
+          "path": "frontend/src/game/spells/useSpellSystem.ts",
+          "operation": "create",
+          "description": "Implement spellcasting state management (mana/energy pool, cooldown timers, cast triggers) and expose cast requests to the scene update loop."
+        },
+        {
+          "path": "frontend/src/game/spells/SpellEffects.tsx",
+          "operation": "create",
+          "description": "Render simple, lightweight Three.js visual effects for spells (projectile mesh/particle-like trail, area burst ring, shield bubble) and provide collision/damage hooks for target interaction."
+        },
+        {
+          "path": "frontend/src/ui/HUD/SpellBar.tsx",
+          "operation": "create",
+          "description": "Add HUD spell bar UI listing the 3 spells with keybinds, cooldown states, and mana cost indicators; ensure keybinds are clearly shown in English."
+        },
+        {
+          "path": "frontend/src/game/SpellheimCanvas.tsx",
+          "operation": "modify",
+          "description": "Wire the spell system into the scene: accept cast inputs, spawn SpellEffects, and route hit/damage interactions to a target system."
+        },
+        {
+          "path": "frontend/src/ui/HUD/HUDOverlay.tsx",
+          "operation": "modify",
+          "description": "Integrate SpellBar and display mana/energy with clear labeling; ensure spell keybinds are documented in the UI."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Implement minimal combat loop with a hostile creature, health/damage, simple AI, death/respawn, and spell-based defeat.",
+      "acceptanceCriteria": [
+        "At least one creature spawns in the scene and moves/attacks the player when in range",
+        "Creature and player both have health; HUD displays player health and mana/energy",
+        "Creature can be defeated by spell damage and visibly transitions to a defeated state (then respawns or is removed)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/combat/combatTypes.ts",
+          "operation": "create",
+          "description": "Define lightweight types and helpers for entities with health, damage, and state transitions (alive/defeated/respawning)."
+        },
+        {
+          "path": "frontend/src/game/entities/HostileCreature.tsx",
+          "operation": "create",
+          "description": "Create at least one hostile creature entity rendered in the Three.js scene with a simple approach/attack behavior and clear visual distinction from NPCs."
+        },
+        {
+          "path": "frontend/src/game/entities/useCreatureAI.ts",
+          "operation": "create",
+          "description": "Implement simple AI loop (approach player when within detection range, attack when close) with safe cleanup on unmount."
+        },
+        {
+          "path": "frontend/src/game/entities/DamageSystem.ts",
+          "operation": "create",
+          "description": "Add a damage application utility that allows SpellEffects to apply damage to creatures and allows creatures to damage the player on attack cadence."
+        },
+        {
+          "path": "frontend/src/ui/HUD/StatusBars.tsx",
+          "operation": "create",
+          "description": "Create HUD bars for player health and mana/energy, styled consistently with the fantasy HUD panel."
+        },
+        {
+          "path": "frontend/src/game/SpellheimCanvas.tsx",
+          "operation": "modify",
+          "description": "Spawn and manage the hostile creature in the scene; connect spell hit detection to creature health; implement defeated state and respawn/removal behavior."
+        },
+        {
+          "path": "frontend/src/ui/HUD/HUDOverlay.tsx",
+          "operation": "modify",
+          "description": "Add player health display (and ensure mana display remains present) in the HUD via StatusBars."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add biome support with three visually distinct biomes and a way to switch biomes without breaking controls/combat.",
+      "acceptanceCriteria": [
+        "At least 3 biomes exist with clearly different environment visuals",
+        "Player can switch between biomes without breaking controls or combat",
+        "Biome change updates scene visuals (lighting/skybox/ground material/props)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/biomes/biomes.ts",
+          "operation": "create",
+          "description": "Define at least three biome configurations (palette, lighting parameters, ground material style, and simple prop sets) for Niron."
+        },
+        {
+          "path": "frontend/src/game/biomes/BiomeEnvironment.tsx",
+          "operation": "create",
+          "description": "Implement a scene subcomponent that applies the current biome visuals (lighting/sky-like background/ground appearance/props) without resetting core gameplay state."
+        },
+        {
+          "path": "frontend/src/ui/HUD/BiomeSwitcher.tsx",
+          "operation": "create",
+          "description": "Add an in-game UI control (menu/dropdown) to switch biomes; keep labels in English and ensure it does not interfere with movement controls."
+        },
+        {
+          "path": "frontend/src/game/SpellheimCanvas.tsx",
+          "operation": "modify",
+          "description": "Wire the current biome into the scene and mount BiomeEnvironment; ensure biome switching does not remount the entire canvas or break combat/controls."
+        },
+        {
+          "path": "frontend/src/ui/HUD/HUDOverlay.tsx",
+          "operation": "modify",
+          "description": "Expose BiomeSwitcher within the HUD/settings area and connect it to scene biome state."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Add an in-game non-hostile NPC with interaction prompt and a multi-step dialogue UI.",
+      "acceptanceCriteria": [
+        "An NPC exists in at least one biome and is visually distinct from hostile creatures",
+        "Approaching the NPC shows an interaction prompt and opens a dialogue UI",
+        "Dialogue UI supports at least 2 dialogue pages/steps and can be closed"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/entities/NPC.tsx",
+          "operation": "create",
+          "description": "Create a non-hostile NPC entity rendered in the scene with distinct visuals and an interaction trigger volume."
+        },
+        {
+          "path": "frontend/src/game/interactions/useInteractionPrompt.ts",
+          "operation": "create",
+          "description": "Implement proximity detection + interaction input handling to show an on-screen prompt and trigger dialogue open/close."
+        },
+        {
+          "path": "frontend/src/ui/dialogue/DialoguePanel.tsx",
+          "operation": "create",
+          "description": "Implement a simple dialogue UI supporting multi-line text and at least two steps with Next and Close actions; all copy in English."
+        },
+        {
+          "path": "frontend/src/ui/HUD/InteractionPrompt.tsx",
+          "operation": "create",
+          "description": "Add an on-screen interaction prompt UI element shown when near an interactable NPC."
+        },
+        {
+          "path": "frontend/src/game/SpellheimCanvas.tsx",
+          "operation": "modify",
+          "description": "Place the NPC in at least one biome and connect interaction detection to HUD prompt and dialogue panel state."
+        },
+        {
+          "path": "frontend/src/ui/HUD/HUDOverlay.tsx",
+          "operation": "modify",
+          "description": "Mount InteractionPrompt and DialoguePanel overlays and connect them to the interaction state."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Add background music playback with play/pause and volume controls that persist and behave consistently across transitions.",
+      "acceptanceCriteria": [
+        "Background music plays in-game with user-accessible play/pause and volume controls",
+        "Audio does not restart unexpectedly on minor UI state changes; behavior across biome changes is consistent",
+        "Music can be muted and remains muted after refresh (per user)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/audio/spellheim-theme.mp3",
+          "operation": "create",
+          "description": "Add a bundled background music file used for in-game playback (static asset served from public)."
+        },
+        {
+          "path": "frontend/src/audio/AudioProvider.tsx",
+          "operation": "create",
+          "description": "Implement a top-level audio controller (single HTMLAudioElement instance) with play/pause, volume, mute state, and persistence to local storage so audio does not restart on minor UI changes."
+        },
+        {
+          "path": "frontend/src/ui/HUD/AudioControls.tsx",
+          "operation": "create",
+          "description": "Add in-game audio controls (play/pause toggle and volume slider, plus mute) wired to AudioProvider; labels in English."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap the app shell with AudioProvider so music continues appropriately across landing/customization/game transitions and biome changes."
+        },
+        {
+          "path": "frontend/src/ui/HUD/HUDOverlay.tsx",
+          "operation": "modify",
+          "description": "Mount AudioControls in a settings area of the HUD and ensure user preferences persist after refresh."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Establish and apply a coherent fantasy visual theme across all screens and overlays (avoid blue/purple as primary palette).",
+      "acceptanceCriteria": [
+        "UI uses one consistent fantasy-themed design system (typography, spacing, component styles)",
+        "Primary palette is not blue/purple-dominant",
+        "All core screens (landing, customization, in-game HUD, dialogue, settings) share the same style"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styles and Tailwind CSS variables for a fantasy theme (parchment, ink, forest/earth/gold accents) ensuring the primary palette is not blue/purple-dominant; apply base typography and panel styling utilities."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust theme tokens (via CSS variables mapping) as needed to support the Spellheim fantasy palette and consistent component styling."
+        },
+        {
+          "path": "frontend/src/ui/layout/Panel.tsx",
+          "operation": "create",
+          "description": "Create a reusable themed Panel wrapper component for parchment-style UI surfaces; compose shadcn-ui primitives where appropriate (do not edit immutable ui component files). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/screens/LandingScreen.tsx",
+          "operation": "modify",
+          "description": "Apply the Spellheim theme consistently: typography, buttons, panel styles, and layout using the shared Panel and theme tokens."
+        },
+        {
+          "path": "frontend/src/screens/CharacterCustomizationScreen.tsx",
+          "operation": "modify",
+          "description": "Apply the shared fantasy theme to the customization form and actions using Panel and global theme tokens."
+        },
+        {
+          "path": "frontend/src/ui/HUD/HUDOverlay.tsx",
+          "operation": "modify",
+          "description": "Apply consistent HUD styling (panels, buttons, labels) matching landing/customization/dialogue/settings theme."
+        },
+        {
+          "path": "frontend/src/ui/dialogue/DialoguePanel.tsx",
+          "operation": "modify",
+          "description": "Style the dialogue UI to match the overall fantasy theme (panel, typography, button states) consistently."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Add generated static images (logo, HUD texture, spell icons) under frontend/public/assets/generated and reference them directly in the frontend UI.",
+      "acceptanceCriteria": [
+        "All required images are present under frontend/public/assets/generated",
+        "Landing screen uses the logo image",
+        "HUD uses the panel texture and spells use the icon set without routing images through the backend"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/spellheim-logo.dim_1024x256.png",
+          "operation": "create",
+          "description": "Add the generated Spellheim logo image asset at the exact required path/filename for direct frontend reference."
+        },
+        {
+          "path": "frontend/public/assets/generated/hud-panel-texture.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated parchment-style HUD panel texture asset at the exact required path/filename for direct frontend reference."
+        },
+        {
+          "path": "frontend/public/assets/generated/spell-icons-set.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated spell icon set image asset at the exact required path/filename for direct frontend reference."
+        },
+        {
+          "path": "frontend/src/screens/LandingScreen.tsx",
+          "operation": "modify",
+          "description": "Reference and render the logo image from frontend/public/assets/generated/spellheim-logo.dim_1024x256.png on the landing screen."
+        },
+        {
+          "path": "frontend/src/ui/HUD/HUDOverlay.tsx",
+          "operation": "modify",
+          "description": "Apply the HUD panel texture from frontend/public/assets/generated/hud-panel-texture.dim_1024x1024.png to HUD surfaces (e.g., Panel wrapper background)."
+        },
+        {
+          "path": "frontend/src/ui/HUD/SpellBar.tsx",
+          "operation": "modify",
+          "description": "Use the icon set at frontend/public/assets/generated/spell-icons-set.dim_512x512.png to visually represent the three spells in the HUD without involving the backend."
+        }
+      ]
+    }
+  ]
+}

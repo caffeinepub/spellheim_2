@@ -1,0 +1,240 @@
+{
+  "kind": "build_request",
+  "title": "Spellheim: MVP first-person 2.5D fantasy game scaffold (Niron)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create the core app shell for Spellheim with a landing screen and an in-app navigation flow into the playable game scene.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Ok so let’s make this"
+        ]
+      },
+      "acceptanceCriteria": [
+        "App loads to a Spellheim landing screen with a clear primary action to start the game",
+        "Starting the game transitions into a game scene view without full page reloads",
+        "User-facing text is in English"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement a playable first-person 2.5D game scene using Three.js via React Three Fiber, including player camera controls, a ground plane, collision boundaries, and a basic movement loop (WASD + mouse look).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Ok so let’s make this"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Player can move with WASD and look around with mouse",
+        "Player cannot move through world bounds/solid collision volume(s)",
+        "The game loop renders smoothly and does not crash when entering/exiting the scene"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add an initial character customization UI that lets the player configure a character profile (at minimum: name, archetype/class, and 2–3 cosmetic selections) and apply it to the in-game HUD/profile state.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Ok so let’s make this"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A customization screen exists before entering the game (or accessible from a menu)",
+        "Chosen options are shown in a simple HUD/profile panel in-game",
+        "Character profile persists across refresh for the signed-in user (or locally if not signed in)"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement a basic spellcasting system with at least three spells (e.g., projectile, area effect, defensive shield) including casting input, cooldowns, mana/energy resource, and simple visual effects.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Ok so let’s make this"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Player can cast at least 3 distinct spells with clearly documented keybinds displayed in the UI",
+        "Spells consume mana/energy and respect cooldowns",
+        "Spell effects are visible in the scene and interact with at least one target type (dummy or creature)"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement a minimal combat loop: spawn at least one hostile creature type with health, damage, simple AI (approach/attack), and death/respawn; enable the player to defeat it using spells.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Ok so let’s make this"
+        ]
+      },
+      "acceptanceCriteria": [
+        "At least one creature spawns in the scene and moves/attacks the player when in range",
+        "Creature and player both have health; HUD displays player health and mana/energy",
+        "Creature can be defeated by spell damage and visibly transitions to a defeated state (then respawns or is removed)"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Add biome support for the world of Niron: implement at least three biomes (visual palette + props/terrain variation) and a way to switch biomes (menu or portal) while keeping core gameplay intact.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Ok so let’s make this"
+        ]
+      },
+      "acceptanceCriteria": [
+        "At least 3 biomes exist with clearly different environment visuals",
+        "Player can switch between biomes without breaking controls or combat",
+        "Biome change updates scene visuals (lighting/skybox/ground material/props)"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Add NPC support: implement at least one non-hostile NPC with an interaction prompt and a simple dialogue UI (multi-line, next/close) that can be triggered in-game.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Ok so let’s make this"
+        ]
+      },
+      "acceptanceCriteria": [
+        "An NPC exists in at least one biome and is visually distinct from hostile creatures",
+        "Approaching the NPC shows an interaction prompt and opens a dialogue UI",
+        "Dialogue UI supports at least 2 dialogue pages/steps and can be closed"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Add music support: include background music playback with controls (play/pause, volume) and ensure it continues appropriately across biome changes and scene transitions.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Ok so let’s make this"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Background music plays in-game with user-accessible play/pause and volume controls",
+        "Audio does not restart unexpectedly on minor UI state changes; behavior across biome changes is consistent",
+        "Music can be muted and remains muted after refresh (per user)"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Implement backend persistence in the single Motoko actor for player save data (character profile, basic stats/progression, settings like audio volume) keyed to the authenticated Internet Identity principal when available.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Ok so let’s make this"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes methods to get/update the current user’s save data",
+        "When signed in, the same principal retrieves the same save data after refresh",
+        "When not signed in, the app still works (e.g., uses local-only save) and does not throw backend errors"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Establish a coherent visual theme for Spellheim (colors, typography, panels, buttons, HUD styling) that fits a fantasy game set in Niron, and apply it consistently across landing, customization, HUD, dialogue, and settings UI (avoid blue/purple as the primary palette).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Ok so let’s make this"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UI uses one consistent fantasy-themed design system (typography, spacing, component styles)",
+        "Primary palette is not blue/purple-dominant",
+        "All core screens (landing, customization, in-game HUD, dialogue, settings) share the same style"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Add generated static image assets and use them in the UI: a Spellheim logo, a parchment-style HUD panel texture, and a set of spell icons. Store generated images under frontend/public/assets/generated and reference them directly from the frontend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Ok so let’s make this"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All required images are present under frontend/public/assets/generated",
+        "Landing screen uses the logo image",
+        "HUD uses the panel texture and spells use the icon set without routing images through the backend"
+      ]
+    }
+  ],
+  "constraints": [
+    "Use English for any user-facing text",
+    "Backend must remain a single Motoko actor (no additional backend services)",
+    "Do not edit files in frontend/src/components/ui or other immutable paths listed by the system; compose them instead",
+    "Do not introduce unsupported technologies (no external databases, no WebSockets, no third-party auth beyond Internet Identity)"
+  ],
+  "nonGoals": [
+    "Multiplayer or real-time networking",
+    "External map/GPS/location features",
+    "Third-party AI/LLM integrations",
+    "Payments, marketplaces, or trading systems",
+    "Advanced 3D character rigging/animation beyond simple placeholders for the MVP"
+  ],
+  "imageRequirements": {
+    "required": [
+      "Fantasy wordmark logo reading “Spellheim”, medieval engraved style, dark ink on parchment background (spellheim-logo.dim_1024x256.png)",
+      "Seamless parchment/aged leather UI panel texture, subtle ornamental corners (hud-panel-texture.dim_1024x1024.png)",
+      "Set of 3 fantasy spell icons (projectile, area burst, shield) in a consistent ink/etched style on transparent background (spell-icons-set.dim_512x512.png)"
+    ],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [
+      "Build Spellheim, a first-person 2.5D fantasy game set in Niron with customization, spellcasting, combat, biomes, creatures, NPCs, and music"
+    ],
+    "goalsToRemove": [],
+    "preferencesToAdd": [
+      "Use English for user-facing text"
+    ],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}
